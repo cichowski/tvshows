@@ -13,4 +13,4 @@
 |
 */
 
-$router->get('/', function() { echo 'new Lumen project'; });
+$router->get('/', 'TVMazeController@search');
