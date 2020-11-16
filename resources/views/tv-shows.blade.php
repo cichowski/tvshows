@@ -27,6 +27,6 @@
         </form>
     </div>
 
-    <search-results :shows="this.form.shows"></search-results>
+    <search-results id="search-results-container" :shows="this.form.shows"></search-results>
 
 @endsection

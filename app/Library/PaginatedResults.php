@@ -73,7 +73,7 @@ class PaginatedResults
             'current_page' => $this->currentPage,
             'no_pages' => $this->numberOfPages,
             'no_items' => $this->numberOfItems,
-            'results' => !empty($this->results) ? array_slice($this->results, $this->currentPage - 1, $this->perPage) : [],
+            'results' => !empty($this->results) ? array_slice($this->results, ($this->currentPage - 1) * $this->perPage, $this->perPage) : [],
             'error_message' => !empty($this->errorMessage) ? $this->errorMessage : '',
         ];
     }
