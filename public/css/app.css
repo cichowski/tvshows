@@ -1,0 +1,30 @@
+.tv-item {
+    display: inline-block;
+    vertical-align: top;
+    font-size: 16px;
+    padding-bottom: 24px;
+}
+
+.tv-item .thumbnail {
+    display: block;
+    height: auto;
+    max-width: 100%;
+    padding: 4px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.tv-item .caption {
+    padding: 6px;
+}
+
+.tv-item .title{
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #444;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 0;
+}
