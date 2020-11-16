@@ -1,24 +1,32 @@
-# Lumen PHP Framework
+# TV Shows
+Simple application made as a part of recrutation process.
+ 
+## Architecture
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://img.shields.io/packagist/dt/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://img.shields.io/packagist/v/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://img.shields.io/packagist/l/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
+It is build on Lumen & Vue frameworks.
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+## Requirements
 
-## Official Documentation
+Application needs for running:
+- php 7.3+ server
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+Application needs for set up:
+- composer
 
-## Contributing
+## Installation
 
-Thank you for considering contributing to Lumen! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. Download the repository by preffered way
 
-## Security Vulnerabilities
+- https: `git close https://github.com/cichowski/tvshows.git`
+- ssh: `git@github.com:cichowski/tvshows.git`
+- or just download archive and unzip files
+ 
+2. Run `composer install`
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+3. Rename `.env.local` to `.env`
+
+4. Change `APP_URL` or even other values in `.env`
 
 ## License
 
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
