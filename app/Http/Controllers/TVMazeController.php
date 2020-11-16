@@ -11,7 +11,10 @@ use Illuminate\Validation\ValidationException;
 
 class TVMazeController extends Controller
 {
-    private const CACHE_TIME_IN_MINUTES = 240;
+    /**
+     * TV Maze cache each query result for 60 minutes anyway.
+     */
+    private const CACHE_TIME_IN_MINUTES = 60;
 
     /**
      * @var TVMazeService
@@ -36,10 +39,15 @@ class TVMazeController extends Controller
         $this->validate(request(), [
             'q' => 'required',
             'p' => 'integer|min:1',
+            's' => 'integer|min:1',
         ]);
 
         return response()->json(
-            $this->getResponseData($request->get('q'), $request->get('p'))->toArray(),
+            $this->getResponseData(
+                $request->get('q'),
+                $request->get('p'),
+                $request->get('s')
+            )->toArray(),
             JsonResponse::HTTP_OK
         );
     }
@@ -47,11 +55,12 @@ class TVMazeController extends Controller
     /**
      * @param string $searchPhrase
      * @param int|null $page
+     * @param int|null $pageSize
      * @return PaginatedResults
      */
-    private function getResponseData(string $searchPhrase, ?int $page = null): PaginatedResults
+    private function getResponseData(string $searchPhrase, ?int $page = null, ?int $pageSize = null): PaginatedResults
     {
-        $perPage = $page !== null ? config('tvshows.resultsPerPage') : null;
+        $perPage = $pageSize !== null ? $pageSize : ($page !== null ? config('tvshows.resultsPerPage') : null);
         $responseData = new PaginatedResults($page, $perPage);
 
         if (Cache::has($searchPhrase)) {

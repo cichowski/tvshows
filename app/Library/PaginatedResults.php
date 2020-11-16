@@ -50,7 +50,7 @@ class PaginatedResults
             $this->currentPage = 1;
             $this->numberOfPages = 1;
         } else {
-            $this->numberOfPages = (int)floor($this->numberOfItems / $this->perPage);
+            $this->numberOfPages = (int)ceil($this->numberOfItems / $this->perPage);
         }
     }
 

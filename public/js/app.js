@@ -23,6 +23,7 @@ class Form {
 	constructor(data) {
 		this.searchPhrase = data.searchPhrase;
 		this.page = data.page;
+		this.resultsPerPage = data.resultsPerPage;
 		this.defaultSearchInputClass = 'form-control';
 		this.searchInputClass = this.defaultSearchInputClass ;
 		this.shows = [];
@@ -44,18 +45,18 @@ class Form {
 	}
 
 	submit() {
-		axios.get('/api/?p=1&q=' + this.searchPhrase)
+		axios.get('/api/?s=' + this.resultsPerPage + '&p=1&q=' + this.searchPhrase)
 			.then(this.onSuccess.bind(this))
 		 	.catch(this.onFail.bind(this));
 	}
 
 	loadNextPage() {
-		if (this.lastPage === this.page) {
+		if (this.lastPage <= this.page) {
 			return;
 		}
 
 		this.page++;
-		axios.get('/api/?p=' + this.page + '&q=' + this.searchPhrase)
+		axios.get('/api/?s=' + this.resultsPerPage + '&p=' + this.page + '&q=' + this.searchPhrase)
 			.then(this.onPageLoad.bind(this));
 	}
 
@@ -73,8 +74,10 @@ class Form {
 	onFail(error) {
 		if (error.response === undefined) {
 			this.errorMessage = 'Something went wrong. Please try again later';
-		} else {
+		} else if (error.response.data.q !== undefined)  {
 			this.errorMessage = error.response.data.q[0].replace(/The q/, 'This');
+		} else {
+			this.errorMessage = error.response.data.p !== undefined ? error.response.data.p[0] : error.response.data.s[0];
 		}
 		this.searchInputClass += ' is-invalid';
 	}
@@ -97,7 +100,12 @@ new Vue({
 	data: {
 		form: new Form({
 			searchPhrase: '',
-			page: 1
+			page: 1,
+			/**
+			 * Should be at least one more than a number of results
+			 * visible on first (default) page without scrolling.
+			 */
+			resultsPerPage: 9
 		}),
 	},
 
@@ -118,7 +126,7 @@ new Vue({
 			let distanceFromTop = resultsContainer.offsetTop;
 
 			return (
-				window.pageYOffset >= (distanceFromTop + heightOfResultsContainer) * 0.60
+				window.pageYOffset >= (distanceFromTop + heightOfResultsContainer) * 0.1
 			);
 		}
 	},
