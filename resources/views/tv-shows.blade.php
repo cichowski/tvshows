@@ -5,61 +5,28 @@
 
     <hr class="mt-2 mb-5">
 
-    <div class="row text-center text-lg-left">
-
-        <div class="col-lg-3 col-md-4 col-6 tv-item">
-            <div class="thumbnail">
-                <div class="image-wrapper">
-                    <img class="img-fluid img-thumbnail" src="https://source.unsplash.com/pWkk7iiCoDM/400x300" alt="">
+    <div class="mb-5">
+        <form method="get" action="/" @submit.prevent="onSubmit">
+            <div class="input-group mb-3">
+                <div id="search-phrase-label" class="input-group-prepend">
+                    <span class="input-group-text">TV show</span>
                 </div>
-                <div class="caption">
-                    <h3 class="title">Title</h3>
+                <input type="text"
+                       name="search_phrase"
+                       :class="form.searchInputClass"
+                       placeholder="Enter a TV show name"
+                       aria-describedby="search-phrase-label"
+                       v-model="form.searchPhrase"
+                       @change="form.clearError()"
+                />
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit" :disabled="form.hasError()">Search</button>
                 </div>
+                <div id="search-error" class="invalid-feedback" v-text="form.errorMessage"></div>
             </div>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-6 tv-item">
-            <div class="thumbnail">
-                <div class="image-wrapper">
-                    <img class="img-fluid img-thumbnail" src="https://source.unsplash.com/EUfxH-pze7s/400x300" alt="">
-                </div>
-                <div class="caption">
-                    <h3 class="title">Title</h3>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-6 tv-item">
-            <div class="thumbnail">
-                <div class="image-wrapper">
-                    <img class="img-fluid img-thumbnail" src="https://source.unsplash.com/G9Rfc1qccH4/400x300" alt="">
-                </div>
-                <div class="caption">
-                    <h3 class="title">Title</h3>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-6 tv-item">
-            <div class="thumbnail">
-                <div class="image-wrapper">
-                    <img class="img-fluid img-thumbnail" src="https://source.unsplash.com/aJeH0KcFkuc/400x300" alt="">
-                </div>
-                <div class="caption">
-                    <h3 class="title">Title</h3>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12 tv-item">
-            <div class="thumbnail">
-                <div class="image-wrapper" style="float:left;">
-                    <img class="img-fluid img-thumbnail" src="https://source.unsplash.com/p2TQ-3Bh3Oo/400x300" alt="">
-                </div>
-                <div class="caption" style="float:left;">
-                    <h3 class="title">Title</h3>
-                </div>
-            </div>
-        </div>
+        </form>
     </div>
+
+    <search-results :shows="this.form.shows"></search-results>
+
 @endsection

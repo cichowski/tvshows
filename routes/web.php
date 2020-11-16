@@ -13,4 +13,8 @@
 |
 */
 
-$router->get('/', 'TVMazeController@search');
+$router->get('/api/', 'TVMazeController@search');
+
+$router->get('/', function() {
+    return view('tv-shows');
+});

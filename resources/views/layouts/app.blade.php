@@ -6,7 +6,6 @@
 
     <title>TV shows</title>
 
-    <script src="/js/bootstrap.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js" defer></script>
     <script src="/js/app.js" defer></script>

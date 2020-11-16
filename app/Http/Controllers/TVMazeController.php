@@ -27,23 +27,20 @@ class TVMazeController extends Controller
      */
     public function search(Request $request): JsonResponse
     {
-        $searchPhrase = $request->get('q');
-        if (null === $searchPhrase) {
-            return response()->json([
-                'error message' => 'No \'q\' parameter provided. Nothing to search.',
-            ], JsonResponse::HTTP_BAD_REQUEST);
-        }
+        $this->validate(request(), [
+            'q' => 'required',
+        ]);
 
         try {
-            $showList = $this->service->search($searchPhrase);
+            $showList = $this->service->search($request->get('q'));
         } catch (TVMazeResponseException $e) {
             $errorMessage = $e->getMessage();
         }
 
         return response()->json([
-                'results count' => isset($showList) ? count($showList) : -1,
+                'no_items' => isset($showList) ? count($showList) : -1,
                 'results' => !empty($showList) ? $showList : [],
-                'error message' => !empty($errorMessage) ? $errorMessage : '',
+                'error_message' => !empty($errorMessage) ? $errorMessage : '',
             ],
             JsonResponse::HTTP_OK
         );
