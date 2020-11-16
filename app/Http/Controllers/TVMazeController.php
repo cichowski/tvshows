@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Library\PaginatedResults;
 use App\Modules\TVMaze\TVMazeResponseException;
 use App\Modules\TVMaze\TVMazeService;
 use Illuminate\Http\JsonResponse;
@@ -34,26 +35,37 @@ class TVMazeController extends Controller
     {
         $this->validate(request(), [
             'q' => 'required',
+            'p' => 'integer|min:1',
         ]);
-        $searchPhrase = $request->get('q');
+
+        return response()->json(
+            $this->getResponseData($request->get('q'), $request->get('p'))->toArray(),
+            JsonResponse::HTTP_OK
+        );
+    }
+
+    /**
+     * @param string $searchPhrase
+     * @param int|null $page
+     * @return PaginatedResults
+     */
+    private function getResponseData(string $searchPhrase, ?int $page = null): PaginatedResults
+    {
+        $perPage = $page !== null ? config('tvshows.resultsPerPage') : null;
+        $responseData = new PaginatedResults($page, $perPage);
 
         if (Cache::has($searchPhrase)) {
-            $showList = Cache::get($searchPhrase);
+            $responseData->setResults(Cache::get($searchPhrase));
         } else {
             try {
                 $showList = $this->service->search($searchPhrase);
+                $responseData->setResults($showList);
                 Cache::put($searchPhrase, $showList, self::CACHE_TIME_IN_MINUTES * 60);
             } catch (TVMazeResponseException $e) {
-                $errorMessage = $e->getMessage();
+                $responseData->setErrorMessage($e->getMessage());
             }
         }
 
-        return response()->json([
-                'no_items' => isset($showList) ? count($showList) : -1,
-                'results' => !empty($showList) ? $showList : [],
-                'error_message' => !empty($errorMessage) ? $errorMessage : '',
-            ],
-            JsonResponse::HTTP_OK
-        );
+        return $responseData;
     }
 }
