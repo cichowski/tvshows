@@ -46,8 +46,8 @@ API
     - `p` - ask for a specific page (positive integer, default: 1)
     - `s` - page size: number o results on single page (positive integer, default: see Configuration)
 - examples:
-    - `localhost/?q=castle`
-    - `json-api.local/?s=12&p=1&q=war`    
+    - `localhost/api?q=castle`
+    - `json-api.local/api?s=12&p=1&q=war`    
     
 WEB
 - address:
@@ -67,7 +67,7 @@ WEB
 * Build Swagger documentation using above
 * Throttle infinite scroll event
 * Refactor app.js
-* For many users: cache shows in advance 
+* For many users: cache tv shows in advance 
 
 ## License
 
